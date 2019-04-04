@@ -1,0 +1,241 @@
+if &compatible
+  set nocompatible
+end
+
+call plug#begin('~/.vim/bundle')
+
+" Define bundles via Github repos
+Plug 'pbrisbin/vim-mkdir'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-liquid'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-ruby/vim-ruby'
+Plug 'qpkorr/vim-bufkill'
+Plug 'vim-scripts/Greplace.vim'
+Plug 'ecomba/vim-ruby-refactoring'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'stephpy/vim-yaml'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'mxw/vim-jsx'
+Plug 'elzr/vim-json'
+Plug 'othree/es.next.syntax.vim'
+Plug 'othree/jsdoc-syntax.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+Plug 'othree/jspc.vim'
+Plug 'ramitos/jsctags'
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'jason0x43/vim-js-indent'
+Plug 'mileszs/ack.vim'
+Plug 'w0ng/vim-hybrid'
+Plug 'junegunn/gv.vim'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'kana/vim-textobj-indent'
+Plug 'christoomey/vim-system-copy'
+Plug 'whatyouhide/vim-textobj-erb'
+Plug 'kana/vim-textobj-user'
+Plug 'ElmCast/elm-vim'
+Plug 'antew/vim-elm-analyse'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/webapi-vim'
+Plug 'wincent/terminus'
+Plug 'mattn/emmet-vim'
+Plug 'lifepillar/vim-solarized8'
+Plug 'eagletmt/ghcmod-vim'
+Plug 'tommcdo/vim-exchange' " swap words
+Plug 'eagletmt/neco-ghc'
+Plug 'godlygeek/tabular'
+Plug 'tomtom/tlib_vim'
+Plug 'jeetsukumaran/vim-filebeagle'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'machakann/vim-highlightedyank' " highlight yanked region
+Plug 'itchyny/lightline.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'othree/html5.vim'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'kassio/neoterm'
+Plug 'rizzatti/dash.vim'
+Plug 'isRuslan/vim-es6'
+Plug 'w0rp/ale'
+Plug 'ethereum/vim-solidity'
+Plug 'janko-m/vim-test'
+Plug 'SirVer/ultisnips'
+Plug 'junegunn/vim-easy-align'
+Plug 'simnalamburt/vim-mundo'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['node_modules/flow-bin/cli.js'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ }
+
+" Elixir
+if has('nvim')
+  Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
+endif
+
+Plug 'andyl/vim-textobj-elixir'
+Plug 'elixir-lang/vim-elixir'
+Plug 'thinca/vim-ref'
+Plug 'c-brenn/phoenix.vim'
+Plug 'slashmili/alchemist.vim'
+
+Plug 'powerman/vim-plugin-AnsiEsc'
+
+" Project navigation
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+" Themes
+Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
+Plug 'chriskempson/base16-vim'
+
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()
+
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
+
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+let g:BufKillOverrideCtrlCaret = 1
+let g:BufKillCreateMappings = 0 " disable default mappings
+
+let g:mundo_width = 60
+let g:mundo_preview_height = 40
+let g:mundo_right = 1
+
+let base16colorspace=256  " Access colors present in 256 colorspace
+
+let g:ale_elm_lsp_use_global = 1
+let g:ale_elm_analyse_use_global = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_sign_column_always = 0
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\  'elixir': ['credo'],
+\  'elm': ['elm_lsp'],
+\}
+" Disable fixers for any file containing 'gems' in its path.
+let g:ale_pattern_options_enabled = 1
+let g:ale_pattern_options = {
+\  'gems': { 'ale_enabled': 0 }
+\}
+let g:ale_fixers = {
+\   'ruby': ['rubocop']
+\}
+
+
+let g:alchemist#elixir_erlang_src = "/Users/cezar/Work/src"
+let g:alchemist_iex_term_split = 'split'
+
+let g:titlecase_map_keys = 0
+
+au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
+
+let g:haskellmode_completion_ghc = 1
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+let test#strategy = "neovim"
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+
+" Tabular (for haskell)
+let g:haskell_tabular = 1
+
+vmap a= :Tabularize /=<CR>
+vmap a; :Tabularize /::<CR>
+vmap a- :Tabularize /-><CR>
+
+let g:filebeagle_suppress_keymaps = 1
+let g:elm_format_autosave = 1
+let g:elm_setup_keybindings = 0
+let g:elm_make_show_warnings = 0
+" let g:elm_syntastic_show_warnings = 0
+
+let g:tagbar_type_elm = {
+  \ 'kinds' : [
+      \ 'f:function:0:0',
+      \ 'm:modules:0:0',
+      \ 'i:imports:1:0',
+      \ 't:types:1:0',
+      \ 'a:type aliases:0:0',
+      \ 'c:type constructors:0:0',
+      \ 'p:ports:0:0',
+      \ 's:functions:0:0',
+  \ ]
+  \}
+
+let g:vim_json_syntax_conceal = 0
+
+let g:rails_ctags_arguments = ['--languages=ruby']
+
+" Obviously depends on <https://github.com/unblevable/quick-scope> being installed.
+function! Quick_scope_selective(movement)
+    let needs_disabling = 0
+    if !g:qs_enable
+        QuickScopeToggle
+        redraw
+        let needs_disabling = 1
+    endif
+
+    let letter = nr2char(getchar())
+
+    if needs_disabling
+        QuickScopeToggle
+    endif
+
+    return a:movement . letter
+endfunction
+
+let g:ack_default_options =
+      \ " -s -H --nocolor --nogroup --column --smart-case --follow"
+" Change cursor shape between insert and normal mode in iTerm2.app
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
+
+" Apply macro to the visually selected lines
+" xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+" function! ExecuteMacroOverVisualRange()
+"   echo "@".getcmdline()
+"   execute ":'<,'>normal @".nr2char(getchar())
+" endfunction
+
+let g:ragtag_global_maps = 1
+
+let g:rails_projections = {
+      \ "config/projections.json": {
+      \   "command": "projections"
+      \ }}
+
+let g:ctagdirs = "!/usr/local/bin/ctags -R --fields=+iaS --extra=+q . ".$HOME."/.rvm/gems/".system("rvm current | tr -d '\n'")."/gems"
+map <F8> :exe g:ctagdirs<CR>

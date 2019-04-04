@@ -1,0 +1,8 @@
+vimfiles/undodir
+vimfiles/bundle/
+.DS_Store
+fzf/
+vimfiles/tmp/
+vimfiles/view/
+oh-my-zsh/
+vimfiles/sessions

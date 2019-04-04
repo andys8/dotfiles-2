@@ -1,0 +1,4 @@
+--format documentation
+--no-drb
+--color
+--fail-fast

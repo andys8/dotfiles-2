@@ -89,8 +89,8 @@ set grepformat=%f:%l:%c:%m,%f:%l:%m
 " The "Press ENTER or type command to continue" prompt is jarring and usually unnecessary.
 set shortmess=a
 
-if filereadable(expand("~/.vim/vimrc.bundles"))
-  source ~/.vim/vimrc.bundles
+if filereadable(expand("~/dotfiles/vimfiles/vimrc.bundles"))
+  source ~/dotfiles/vimfiles/vimrc.bundles
 endif
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.
@@ -180,11 +180,6 @@ if has("virtualedit")
   " Allow cursor to move where there is no text in visual block mode
   set virtualedit=block
 endif
-
-set background=dark
-color one
-" set background=light
-" color solarized8_flat
 
 " don't scroll windows together
 set nocursorbind

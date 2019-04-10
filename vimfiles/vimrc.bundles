@@ -114,6 +114,12 @@ endif
 
 call plug#end()
 
+set background=dark
+color one
+" set background=light
+" color solarized8_flat
+
+
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ }

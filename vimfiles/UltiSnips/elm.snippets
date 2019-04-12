@@ -1,4 +1,10 @@
-snippet dbl "Debug.log"
+snippet ldbg "Debug.log"
+let
+	_ = Debug.log "${1:name}" $1
+in
+endsnippet
+
+snippet dbg "Debug.log"
 _ = Debug.log "${1:name}" $1
 endsnippet
 

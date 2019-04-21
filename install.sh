@@ -13,4 +13,7 @@ ln -sfv "$DOTFILES_DIR/rubocop.yml" "$HOME/.rubocop.yml"
 ln -sfv "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 
 # Install neovim
-ln -sfv "$DOTFILES_DIR/vimfiles/vimrc" "$HOME/.vimrc"
+mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+ln -sfv "$DOTFILES_DIR/vimfiles/vimrc" "$XDG_CONFIG_HOME/nvim"
+ln -sfv "$DOTFILES_DIR/vimfiles/vimrc" "$XDG_CONFIG_HOME/vim/init.vim"
+ln -sfv "$DOTFILES_DIR/vimfiles/projections.json" "$HOME/.projections.json"

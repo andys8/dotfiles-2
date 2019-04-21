@@ -8,6 +8,7 @@ alias tig='tig status'
 alias tags='ctags -R --languages=ruby --exclude=.git --exclude=log . $(bundle list --paths)'
 
 alias l='ls -laGh'
+alias tree='tree -C'
 alias t='tree -C'
 
 function git-branch-name {

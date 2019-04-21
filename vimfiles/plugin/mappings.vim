@@ -75,9 +75,9 @@ nnoremap <D-l> <c-w>l
 
 " Search for the word under cursor in the whole project
 " nnoremap K :tag <c-r>=expand("<cword>")<CR><CR>
-nnoremap K :LeaderfTagCword<CR>
-nnoremap <leader>t :LeaderfTag<CR>
-nnoremap <leader>b :LeaderfBuffer<CR>
+nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <leader>f :PickerEdit<CR>
+nnoremap <leader>b :PickerBuffer<CR>
 
 nnoremap <TAB> :BF<CR>
 nnoremap <S-TAB> :BB<CR>

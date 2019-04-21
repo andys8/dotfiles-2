@@ -181,10 +181,10 @@ if has("virtualedit")
   set virtualedit=block
 endif
 
-" set background=dark
-" color one
-set background=light
-color solarized8_flat
+set background=dark
+color one
+" set background=light
+" color solarized8_flat
 
 " don't scroll windows together
 set nocursorbind

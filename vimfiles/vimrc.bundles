@@ -4,79 +4,48 @@ end
 
 call plug#begin('~/.vim/bundle')
 
-" Define bundles via Github repos
-Plug 'pbrisbin/vim-mkdir'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-liquid'
-Plug 'tpope/vim-ragtag'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
+" Ruby/Rails
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-cucumber'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-vinegar'
 Plug 'vim-ruby/vim-ruby'
-Plug 'qpkorr/vim-bufkill'
-Plug 'vim-scripts/Greplace.vim'
-Plug 'ecomba/vim-ruby-refactoring'
-Plug 'AndrewRadev/splitjoin.vim'
+Plug 'tpope/vim-endwise'
 Plug 'stephpy/vim-yaml'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'mxw/vim-jsx'
-Plug 'elzr/vim-json'
-Plug 'othree/es.next.syntax.vim'
-Plug 'othree/jsdoc-syntax.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
-Plug 'othree/jspc.vim'
-Plug 'ramitos/jsctags'
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/vim-js-pretty-template'
-Plug 'jason0x43/vim-js-indent'
-Plug 'mileszs/ack.vim'
-Plug 'w0ng/vim-hybrid'
-Plug 'junegunn/gv.vim'
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'kana/vim-textobj-indent'
-Plug 'christoomey/vim-system-copy'
-Plug 'whatyouhide/vim-textobj-erb'
-Plug 'kana/vim-textobj-user'
+Plug 'tpope/vim-projectionist'
+Plug 'janko-m/vim-test'
+
+" Elm
 Plug 'ElmCast/elm-vim'
 Plug 'antew/vim-elm-analyse'
-Plug 'majutsushi/tagbar'
-Plug 'mattn/webapi-vim'
-Plug 'wincent/terminus'
-Plug 'mattn/emmet-vim'
-Plug 'lifepillar/vim-solarized8'
-Plug 'eagletmt/ghcmod-vim'
-Plug 'tommcdo/vim-exchange' " swap words
-Plug 'eagletmt/neco-ghc'
-Plug 'godlygeek/tabular'
-Plug 'tomtom/tlib_vim'
-Plug 'jeetsukumaran/vim-filebeagle'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'machakann/vim-highlightedyank' " highlight yanked region
+
+" Automatically create any non-existent directories before writing the buffer.
+Plug 'pbrisbin/vim-mkdir'
+
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-liquid'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-commentary'
+Plug 'qpkorr/vim-bufkill'
+Plug 'mileszs/ack.vim'
+Plug 'christoomey/vim-system-copy'
 Plug 'itchyny/lightline.vim'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'othree/html5.vim'
-Plug 'skywind3000/asyncrun.vim'
 Plug 'kassio/neoterm'
+" Search in Dash
 Plug 'rizzatti/dash.vim'
 Plug 'isRuslan/vim-es6'
 Plug 'w0rp/ale'
-Plug 'ethereum/vim-solidity'
-Plug 'janko-m/vim-test'
+" Run tests
 Plug 'SirVer/ultisnips'
 Plug 'junegunn/vim-easy-align'
+" Undo tree visualizer
 Plug 'simnalamburt/vim-mundo'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -88,25 +57,20 @@ let g:LanguageClient_serverCommands = {
     \ }
 
 " Elixir
-if has('nvim')
-  Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
-endif
-
-Plug 'andyl/vim-textobj-elixir'
+Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
 Plug 'elixir-lang/vim-elixir'
-Plug 'thinca/vim-ref'
-Plug 'c-brenn/phoenix.vim'
-Plug 'slashmili/alchemist.vim'
-
+Plug 'mhinz/vim-mix-format'
 Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Project navigation
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'tpope/vim-vinegar'
 
 " Themes
-Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-one'
-Plug 'chriskempson/base16-vim'
+Plug 'lifepillar/vim-solarized8'
+
+Plug 'Shougo/denite.nvim'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
@@ -143,7 +107,7 @@ let g:ale_sign_warning = '--'
 let g:ale_sign_column_always = 0
 let g:ale_linters = {
 \  'javascript': ['eslint'],
-\  'elixir': ['credo'],
+\  'elixir': ['elixir-ls', 'credo'],
 \  'elm': ['elm_lsp'],
 \}
 " Disable fixers for any file containing 'gems' in its path.
@@ -154,10 +118,17 @@ let g:ale_pattern_options = {
 let g:ale_fixers = {
 \   'ruby': ['rubocop']
 \}
+let g:ale_elixir_elixir_ls_release = "/Users/cezar/Work/src/elixir-ls/rel"
 
+let g:loaded_netrwPlugin = 1
+let g:dirvish_mode = ':sort ,^.*[\/],'
+command! -nargs=? -complete=dir Explore Dirvish <args>
+command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
 let g:alchemist#elixir_erlang_src = "/Users/cezar/Work/src"
 let g:alchemist_iex_term_split = 'split'
+let g:mix_format_on_save = 1
 
 let g:titlecase_map_keys = 0
 
@@ -167,6 +138,77 @@ let g:haskellmode_completion_ghc = 1
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 let test#strategy = "neovim"
+
+" Wrap in try/catch to avoid errors on initial install before plugin is available
+try
+" === Denite setup ==="
+" Use ripgrep for searching current directory for files
+" By default, ripgrep will respect rules in .gitignore
+"   --files: Print each file that would be searched (but don't search)
+"   --glob:  Include or exclues files for searching that match the given glob
+"            (aka ignore .git files)
+"
+call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+
+" Use ripgrep in place of "grep"
+call denite#custom#var('grep', 'command', ['rg'])
+
+" Custom options for ripgrep
+"   --vimgrep:  Show results with every match on it's own line
+"   --hidden:   Search hidden directories and files
+"   --heading:  Show the file name above clusters of matches from each file
+"   --S:        Search case insensitively if the pattern is all lowercase
+call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
+
+" Recommended defaults for ripgrep via Denite docs
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+" Remove date from buffer list
+call denite#custom#var('buffer', 'date_format', '')
+
+" Custom options for Denite
+"   auto_resize             - Auto resize the Denite window height automatically.
+"   prompt                  - Customize denite prompt
+"   direction               - Specify Denite window direction as directly below current pane
+"   winminheight            - Specify min height for Denite window
+"   highlight_mode_insert   - Specify h1-CursorLine in insert mode
+"   prompt_highlight        - Specify color of prompt
+"   highlight_matched_char  - Matched characters highlight
+"   highlight_matched_range - matched range highlight
+let s:denite_options = {'default' : {
+\ 'auto_resize': 1,
+\ 'prompt': 'λ:',
+\ 'direction': 'rightbelow',
+\ 'winminheight': '10',
+\ 'highlight_mode_insert': 'Visual',
+\ 'highlight_mode_normal': 'Visual',
+\ 'prompt_highlight': 'Function',
+\ 'highlight_matched_char': 'Function',
+\ 'highlight_matched_range': 'Normal'
+\ }}
+
+" Loop through denite options and enable them
+function! s:profile(opts) abort
+  for l:fname in keys(a:opts)
+    for l:dopt in keys(a:opts[l:fname])
+      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
+    endfor
+  endfor
+endfunction
+
+call s:profile(s:denite_options)
+catch
+  echo 'Denite not installed. It should work after running :PlugInstall'
+endtry
+
+
+" === coc.nvim === "
+nmap <silent> <leader>dd <Plug>(coc-definition)
+nmap <silent> <leader>dr <Plug>(coc-references)
+nmap <silent> <leader>dj <Plug>(coc-implementation)
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -180,7 +222,6 @@ vmap a= :Tabularize /=<CR>
 vmap a; :Tabularize /::<CR>
 vmap a- :Tabularize /-><CR>
 
-let g:filebeagle_suppress_keymaps = 1
 let g:elm_format_autosave = 1
 let g:elm_setup_keybindings = 0
 let g:elm_make_show_warnings = 0
@@ -245,3 +286,55 @@ let g:rails_projections = {
 
 let g:ctagdirs = "!/usr/local/bin/ctags -R --fields=+iaS --extra=+q . ".$HOME."/.rvm/gems/".system("rvm current | tr -d '\n'")."/gems"
 map <F8> :exe g:ctagdirs<CR>
+
+func! s:setup_ls(...) abort
+  let l:servers = lsp#get_whitelisted_servers()
+
+  for l:server in l:servers
+    let l:cap = lsp#get_server_capabilities(l:server)
+
+    if has_key(l:cap, 'completionProvider')
+      setlocal omnifunc=lsp#complete
+    endif
+
+    if has_key(l:cap, 'hoverProvider')
+      setlocal keywordprg=:LspHover
+    endif
+
+    if has_key(l:cap, 'definitionProvider')
+      nmap <silent> <buffer> gd <plug>(lsp-definition)
+    endif
+
+    if has_key(l:cap, 'referencesProvider')
+      nmap <silent> <buffer> gr <plug>(lsp-references)
+    endif
+  endfor
+endfunc
+
+augroup LSC
+  autocmd!
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'ElixirLS',
+        \ 'cmd': {_->['nix-shell', '-p', 'elixirLS', '--command', 'elixir-ls']},
+        \ 'whitelist': ['elixir', 'eelixir']
+        \})
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'RLS',
+        \ 'cmd': {_->['rls']},
+        \ 'whitelist': ['rust']
+        \})
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'solargraph',
+        \ 'cmd': {server_info->['solargraph', 'stdio']},
+        \ 'initialization_options': {"diagnostics": "true"},
+        \ 'whitelist': ['ruby'],
+        \ })
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'dot',
+        \ 'cmd': {server_info->['dot-language-server', '--stdio']},
+        \ 'whitelist': ['dot'],
+        \ })
+
+  autocmd User lsp_server_init call <SID>setup_ls()
+  autocmd BufEnter * call <SID>setup_ls()
+augroup END

@@ -46,6 +46,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'simnalamburt/vim-mundo'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
+" Javascript
+Plug 'pangloss/vim-javascript'
+Plug 'leshill/vim-json'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -119,12 +122,6 @@ let g:ale_fixers = {
 \   'ruby': ['rubocop']
 \}
 let g:ale_elixir_elixir_ls_release = "/Users/cezar/Work/src/elixir-ls/rel"
-
-let g:loaded_netrwPlugin = 1
-let g:dirvish_mode = ':sort ,^.*[\/],'
-command! -nargs=? -complete=dir Explore Dirvish <args>
-command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
-command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
 let g:alchemist#elixir_erlang_src = "/Users/cezar/Work/src"
 let g:alchemist_iex_term_split = 'split'
@@ -203,12 +200,6 @@ call s:profile(s:denite_options)
 catch
   echo 'Denite not installed. It should work after running :PlugInstall'
 endtry
-
-
-" === coc.nvim === "
-nmap <silent> <leader>dd <Plug>(coc-definition)
-nmap <silent> <leader>dr <Plug>(coc-references)
-nmap <silent> <leader>dj <Plug>(coc-implementation)
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"

@@ -254,11 +254,11 @@ au BufNewFile,BufRead,BufEnter *.rb set nocursorline
 autocmd BufLeave,FocusLost * silent! update
 
 " Automatically save folds
-" augroup AutoSaveFolds
-"   autocmd!
-"   au BufWinLeave ?* mkview 1
-"   au BufWinEnter ?* silent loadview 1
-" augroup END
+augroup AutoSaveFolds
+  autocmd!
+  au BufWinLeave ?* mkview
+  au BufWinEnter ?* silent! loadview
+augroup END
 
 " Based on a range, it replace `:my_key => "value"` to `my_key: value`
 command! -range OldToNewHash <line1>,<line2>s/:\([a-zA-Z-0-9_]\+\)\s*=>/\1:/g

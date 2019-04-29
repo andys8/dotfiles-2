@@ -256,8 +256,8 @@ autocmd BufLeave,FocusLost * silent! update
 " Automatically save folds
 augroup AutoSaveFolds
   autocmd!
-  au BufWinLeave ?* mkview
-  au BufWinEnter ?* silent! loadview
+  au BufWinLeave ?* mkview 1
+  au BufWinEnter ?* silent! loadview 1
 augroup END
 
 " Based on a range, it replace `:my_key => "value"` to `my_key: value`

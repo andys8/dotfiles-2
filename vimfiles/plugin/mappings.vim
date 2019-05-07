@@ -51,22 +51,6 @@ nnoremap <bs> <c-^>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-" Denite
-"   ;         - Browser currently open buffers
-"   <leader>t - Browse list of files in current directory
-"   <leader>g - Search current directory for occurences of given term and
-"   close window if no results
-"   <leader>j - Search current directory for occurences of word under cursor
-nmap <leader>b :Denite buffer -split=floating -winrow=1<CR>
-nmap <leader>f :Denite file/rec -split=floating -winrow=1<CR>
-nnoremap <leader>a :<C-u>Denite grep:. -no-empty -mode=normal<CR>
-nnoremap <leader>K :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
-
-" Coc
-nmap <silent> <leader>dd <Plug>(coc-definition)
-nmap <silent> <leader>dr <Plug>(coc-references)
-nmap <silent> <leader>dj <Plug>(coc-implementation)
-
 " Repeat last macro if in a normal buffer.
 nnoremap <expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 
@@ -102,13 +86,16 @@ nnoremap <leader>1 :set foldlevel=1<cr>
 nnoremap <leader>2 :set foldlevel=2<cr>
 nnoremap <leader>v :e ~/.vimrc<cr>
 nnoremap <leader>V :e ~/.vim/vimrc.bundles<cr>
-" nnoremap <leader>a :Ack!<Space>
+nnoremap <leader>a :Ack!<Space>
 
 " Disable highlighting
 nnoremap <leader>h :noh<cr>
 
 " Copy file path
 nmap <leader>p :let @" = expand("%")<CR>
+
+map <leader>n :NERDTreeToggle<CR>
+map <leader>N :NERDTreeFind<CR>
 
 " Insert mode mappings
 """"""""""""""""""""""

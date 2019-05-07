@@ -29,36 +29,16 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
-Plug 'qpkorr/vim-bufkill'
 Plug 'mileszs/ack.vim'
 Plug 'christoomey/vim-system-copy'
 Plug 'itchyny/lightline.vim'
 Plug 'othree/html5.vim'
 Plug 'kassio/neoterm'
-" Search in Dash
-Plug 'rizzatti/dash.vim'
 Plug 'isRuslan/vim-es6'
 Plug 'w0rp/ale'
-" Run tests
-Plug 'SirVer/ultisnips'
-Plug 'junegunn/vim-easy-align'
-" Undo tree visualizer
-Plug 'simnalamburt/vim-mundo'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
 " Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'leshill/vim-json'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['node_modules/flow-bin/cli.js'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ }
-
 " Elixir
 Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
 Plug 'elixir-lang/vim-elixir'
@@ -67,13 +47,12 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Project navigation
 Plug 'tpope/vim-vinegar'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
 
 " Themes
 Plug 'rakr/vim-one'
 Plug 'lifepillar/vim-solarized8'
-
-Plug 'Shougo/denite.nvim'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
@@ -94,14 +73,29 @@ let g:lightline = {
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-let g:BufKillOverrideCtrlCaret = 1
-let g:BufKillCreateMappings = 0 " disable default mappings
-
-let g:mundo_width = 60
-let g:mundo_preview_height = 40
-let g:mundo_right = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+" Close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+if isdirectory(argv(0))
+    bd
+    autocmd vimenter * exe "cd" argv(0)
+    autocmd VimEnter * NERDTree
+endif
 
 let base16colorspace=256  " Access colors present in 256 colorspace
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn))|(tmp|node_modules|elm-stuff)$',
+  \ 'file': '\v\.(exe|so|dll|map)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_use_caching = 1
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 
 let g:ale_elm_lsp_use_global = 1
 let g:ale_elm_analyse_use_global = 1
@@ -123,8 +117,6 @@ let g:ale_fixers = {
 \}
 let g:ale_elixir_elixir_ls_release = "/Users/cezar/Work/src/elixir-ls/rel"
 
-let g:alchemist#elixir_erlang_src = "/Users/cezar/Work/src"
-let g:alchemist_iex_term_split = 'split'
 let g:mix_format_on_save = 1
 let g:mix_format_silent_errors = 1
 
@@ -137,137 +129,20 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 let test#strategy = "neovim"
 
-" Wrap in try/catch to avoid errors on initial install before plugin is available
-try
-" === Denite setup ==="
-" Use ripgrep for searching current directory for files
-" By default, ripgrep will respect rules in .gitignore
-"   --files: Print each file that would be searched (but don't search)
-"   --glob:  Include or exclues files for searching that match the given glob
-"            (aka ignore .git files)
-"
-call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
-
-" Use ripgrep in place of "grep"
-call denite#custom#var('grep', 'command', ['rg'])
-
-" Custom options for ripgrep
-"   --vimgrep:  Show results with every match on it's own line
-"   --hidden:   Search hidden directories and files
-"   --heading:  Show the file name above clusters of matches from each file
-"   --S:        Search case insensitively if the pattern is all lowercase
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-
-" Recommended defaults for ripgrep via Denite docs
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-" Remove date from buffer list
-call denite#custom#var('buffer', 'date_format', '')
-
-" Custom options for Denite
-"   auto_resize             - Auto resize the Denite window height automatically.
-"   prompt                  - Customize denite prompt
-"   direction               - Specify Denite window direction as directly below current pane
-"   winminheight            - Specify min height for Denite window
-"   highlight_mode_insert   - Specify h1-CursorLine in insert mode
-"   prompt_highlight        - Specify color of prompt
-"   highlight_matched_char  - Matched characters highlight
-"   highlight_matched_range - matched range highlight
-let s:denite_options = {'default' : {
-\ 'auto_resize': 1,
-\ 'prompt': 'λ:',
-\ 'direction': 'rightbelow',
-\ 'winminheight': '10',
-\ 'highlight_mode_insert': 'Visual',
-\ 'highlight_mode_normal': 'Visual',
-\ 'prompt_highlight': 'Function',
-\ 'highlight_matched_char': 'Function',
-\ 'highlight_matched_range': 'Normal'
-\ }}
-
-" Loop through denite options and enable them
-function! s:profile(opts) abort
-  for l:fname in keys(a:opts)
-    for l:dopt in keys(a:opts[l:fname])
-      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-    endfor
-  endfor
-endfunction
-
-call s:profile(s:denite_options)
-catch
-  echo 'Denite not installed. It should work after running :PlugInstall'
-endtry
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-p>"
-
-" Tabular (for haskell)
-let g:haskell_tabular = 1
-
-vmap a= :Tabularize /=<CR>
-vmap a; :Tabularize /::<CR>
-vmap a- :Tabularize /-><CR>
-
 let g:elm_format_autosave = 1
 let g:elm_setup_keybindings = 0
 let g:elm_make_show_warnings = 0
 " let g:elm_syntastic_show_warnings = 0
 
-let g:tagbar_type_elm = {
-  \ 'kinds' : [
-      \ 'f:function:0:0',
-      \ 'm:modules:0:0',
-      \ 'i:imports:1:0',
-      \ 't:types:1:0',
-      \ 'a:type aliases:0:0',
-      \ 'c:type constructors:0:0',
-      \ 'p:ports:0:0',
-      \ 's:functions:0:0',
-  \ ]
-  \}
-
 let g:vim_json_syntax_conceal = 0
-
-let g:rails_ctags_arguments = ['--languages=ruby']
-
-" Obviously depends on <https://github.com/unblevable/quick-scope> being installed.
-function! Quick_scope_selective(movement)
-    let needs_disabling = 0
-    if !g:qs_enable
-        QuickScopeToggle
-        redraw
-        let needs_disabling = 1
-    endif
-
-    let letter = nr2char(getchar())
-
-    if needs_disabling
-        QuickScopeToggle
-    endif
-
-    return a:movement . letter
-endfunction
 
 let g:ack_default_options =
       \ " -s -H --nocolor --nogroup --column --smart-case --follow"
 " Change cursor shape between insert and normal mode in iTerm2.app
 if $TERM_PROGRAM =~ "iTerm"
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
 endif
-
-" Apply macro to the visually selected lines
-" xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-" function! ExecuteMacroOverVisualRange()
-"   echo "@".getcmdline()
-"   execute ":'<,'>normal @".nr2char(getchar())
-" endfunction
 
 let g:ragtag_global_maps = 1
 
@@ -276,57 +151,3 @@ let g:rails_projections = {
       \   "command": "projections"
       \ }}
 
-let g:ctagdirs = "!/usr/local/bin/ctags -R --fields=+iaS --extra=+q . ".$HOME."/.rvm/gems/".system("rvm current | tr -d '\n'")."/gems"
-map <F8> :exe g:ctagdirs<CR>
-
-func! s:setup_ls(...) abort
-  let l:servers = lsp#get_whitelisted_servers()
-
-  for l:server in l:servers
-    let l:cap = lsp#get_server_capabilities(l:server)
-
-    if has_key(l:cap, 'completionProvider')
-      setlocal omnifunc=lsp#complete
-    endif
-
-    if has_key(l:cap, 'hoverProvider')
-      setlocal keywordprg=:LspHover
-    endif
-
-    if has_key(l:cap, 'definitionProvider')
-      nmap <silent> <buffer> gd <plug>(lsp-definition)
-    endif
-
-    if has_key(l:cap, 'referencesProvider')
-      nmap <silent> <buffer> gr <plug>(lsp-references)
-    endif
-  endfor
-endfunc
-
-augroup LSC
-  autocmd!
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'ElixirLS',
-        \ 'cmd': {_->['nix-shell', '-p', 'elixirLS', '--command', 'elixir-ls']},
-        \ 'whitelist': ['elixir', 'eelixir']
-        \})
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'RLS',
-        \ 'cmd': {_->['rls']},
-        \ 'whitelist': ['rust']
-        \})
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'solargraph',
-        \ 'cmd': {server_info->['solargraph', 'stdio']},
-        \ 'initialization_options': {"diagnostics": "true"},
-        \ 'whitelist': ['ruby'],
-        \ })
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'dot',
-        \ 'cmd': {server_info->['dot-language-server', '--stdio']},
-        \ 'whitelist': ['dot'],
-        \ })
-
-  autocmd User lsp_server_init call <SID>setup_ls()
-  autocmd BufEnter * call <SID>setup_ls()
-augroup END
